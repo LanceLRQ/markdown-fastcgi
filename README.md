@@ -1,6 +1,8 @@
 # Markdown FastCGI Service
 
-## How to use?
+Parse markdown document to html in FastCGI supported web server like `nginx`.
+
+## 🤔 How to use?
 
 1. ⬇️ Clone this repository from github 
 2. 📀 Install golang compiler `1.11+`
@@ -10,7 +12,7 @@
     
 4. ⏩ Run it!
 
-    ```./main [-t address]```
+    ```./main [-l address]```
    
    Example:
     ```
@@ -31,9 +33,11 @@
         
         location ~ \.md$ {
             include fastcgi_params;
-            fastcgi_pass 127.0.0.1:9001
+            fastcgi_pass 127.0.0.1:9001;
         }
     }
     ``` 
-    
-🌊 Have fun!
+
+6. 🌊 Visit your website.
+
+## 😜 Have fun!🌞
