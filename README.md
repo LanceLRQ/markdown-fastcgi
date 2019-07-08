@@ -4,9 +4,9 @@ Parse markdown document to html in FastCGI supported web server like `nginx`.
 
 ## 🤔 How to use?
 
-1. ⬇️ Clone this repository from github 
-2. 📀 Install golang compiler `1.11+`
-3. 🔨 Build
+1. ⬇️ Clone this repository from github.
+2. 📀 Install golang compiler `1.11+`.
+3. 🔨 Build it!
 
     ```go build main.go```
     
@@ -40,4 +40,4 @@ Parse markdown document to html in FastCGI supported web server like `nginx`.
 
 6. 🌊 Visit your website.
 
-## 😜 Have fun!🌞
+### 😜 Have fun!🌞
