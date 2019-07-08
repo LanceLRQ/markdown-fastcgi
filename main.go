@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
 	"net/http/fcgi"
 	"os"
 	"path"
+	"regexp"
+	"strings"
 
 	"github.com/russross/blackfriday"
 )
@@ -69,12 +70,39 @@ func (s FastCGIServer) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 
 
 func main() {
-	fmt.Println("Markdown FastCGI Service Listen at 127.0.0.1:9001")
-	listener, _ := net.Listen("tcp", "127.0.0.1:9001")
+	networkMode := "tcp"
+	hostAddr := "127.0.0.1:9001"
+	for i := 0; i < len(os.Args); i++ {
+		p := os.Args[i]
+		switch p {
+		case "-l", "--listen":
+			if i+1 >= len(os.Args) {
+				break
+			}
+			i++
+			addr := os.Args[i]
+			indexUnix := strings.Index(addr, "unix://")
+			if indexUnix > -1 {
+				hostAddr = addr[indexUnix + 6:]
+				networkMode = "unix"
+			} else {
+				a, err := regexp.MatchString("((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))(:\\d)", addr)
+				if !a || err != nil {
+					panic("Wrong IP Address!")
+				}
+				networkMode = "tcp"
+				hostAddr = addr
+			}
+		}
+	}
+
+	fmt.Printf("Markdown FastCGI Service Listen at %s://%s\n", networkMode, hostAddr)
+
+	listener, _ := net.Listen(networkMode, hostAddr)
 	srv := new(FastCGIServer)
 	err := fcgi.Serve(listener, srv)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 }
 
