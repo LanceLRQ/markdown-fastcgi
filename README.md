@@ -42,6 +42,6 @@ Parse markdown document to html in FastCGI supported web server like `nginx`.
 
 ## 🙏 Thanks
 
-[Blackfriday: a markdown processor for Go](github.com/russross/blackfriday)
+[Blackfriday: a markdown processor for Go](https://github.com/russross/blackfriday)
 
 ### 😜 Have fun!🌞
